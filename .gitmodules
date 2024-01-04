@@ -1,0 +1,20 @@
+[submodule "3rd/corrade"]
+	path = 3rd/corrade
+	url = https://github.com/mosra/corrade.git
+	branch = master
+[submodule "3rd/imgui"]
+	path = 3rd/imgui
+	url = https://github.com/ocornut/imgui.git
+	branch = v1.90
+[submodule "3rd/magnum"]
+	path = 3rd/magnum
+	url = https://github.com/mosra/magnum.git
+	branch = master
+[submodule "3rd/magnum-integration"]
+	path = 3rd/magnum-integration
+	url = https://github.com/mosra/magnum-integration.git
+	branch = master
+[submodule "3rd/SDL2"]
+	path = 3rd/SDL2
+	url = https://github.com/libsdl-org/SDL.git
+	branch = release-2.28.5
