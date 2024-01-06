@@ -24,3 +24,9 @@ cmake -G "Ninja" \
     -D CMAKE_C_COMPILER=/usr/bin/clang \
     ..
 ```
+
+# Goals
+
+- commitment to **always** support `vscode` and `emacs` as development environment
+- zero warning compilation messages
+- can be used as a Desktop application on Windows, Mac OS and Linux (`Ubuntu LTS`) as well as a Web application (`Emscripten`) on latest Chromium
