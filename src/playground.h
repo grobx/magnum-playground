@@ -35,16 +35,22 @@ public:
 private:
   void drawEvent() override;
 
+  void initTriangle();
+  void initCube();
+  void initScene();
   void initGUI();
-  void initMesh();
 
   void startDrawing();
   void endDrawing();
+  void drawTriangle();
+  void drawCube();
+  void drawScene();
   void drawGUI();
-  void drawMesh();
+  void resetFeatures();
 
-  GL::Mesh _mesh;
-  Shaders::VertexColorGL2D _shader;
+  GL::Mesh _triangle_mesh;
+  Shaders::VertexColorGL2D _vcolgl2d_shader;
+
   ImGuiIntegration::Context _imgui{NoCreate};
   bool _showDemoWindow = true;
   bool _showAnotherWindow = false;

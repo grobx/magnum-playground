@@ -2,17 +2,35 @@
 
 using WindowFlag = Platform::Sdl2Application::Configuration::WindowFlag;
 
+/**
+ * TODO (milestone #1):
+ * - [x] create a simple Sdl2Application
+ * - [x] add ImGuiIntegration
+ * - [x] use the Triangle example
+ * - [ ] use the Texture example (optional)
+ * - [ ] use the Primitive example
+ * - [ ] use the Model Viewer example
+ * - [ ] add EigenIntegration
+ * - [ ] create the first Scene
+ * - [ ] put the table on the scene (optional)
+ * - [ ] add obj imported
+ * - [ ] look for some obj file
+ * - [ ] put some obj on the scene
+ * - [ ] start manipulating the object using eigen
+ */
 Playground::Playground(const Arguments &arguments)
-    : Platform::Application{arguments,
-                            Configuration{}
-                                .setTitle("Magnum Triangle Example")
-                                .setSize({1024, 800})
-                                .addWindowFlags(WindowFlag::Fullscreen)} {
-  initMesh();
+    : Platform::Application{
+          arguments, Configuration{}
+                         .setTitle("Playground")
+                         .addWindowFlags(WindowFlag::FullscreenDesktop)} {
+  initTriangle();
+  initCube();
+  initScene();
   initGUI();
 }
 
-void Playground::initMesh() {
+// From https://doc.magnum.graphics/magnum/examples-triangle.html
+void Playground::initTriangle() {
   using namespace Math::Literals;
 
   struct TriangleVertex {
@@ -26,18 +44,32 @@ void Playground::initMesh() {
       {{0.0f, 0.5f}, 0x0000ff_rgbf}    /* Top vertex, blue color */
   };
 
-  _mesh.setCount(Containers::arraySize(vertices))
+  _triangle_mesh.setCount(Containers::arraySize(vertices))
       .addVertexBuffer(GL::Buffer{vertices}, 0,
                        Shaders::VertexColorGL2D::Position{},
                        Shaders::VertexColorGL2D::Color3{});
 }
 
+void Playground::drawTriangle() { _vcolgl2d_shader.draw(_triangle_mesh); }
+
+// From https://doc.magnum.graphics/magnum/examples-primitives.html
+void Playground::initCube() {}
+
+void Playground::drawCube() {}
+
+// From https://doc.magnum.graphics/magnum/examples-viewer.html
+void Playground::initScene() {}
+
+void Playground::drawScene() {}
+
+// From https://doc.magnum.graphics/magnum/examples-imgui.html
 void Playground::initGUI() {
   _imgui = ImGuiIntegration::Context(Vector2{windowSize()} / dpiScaling(),
                                      windowSize(), framebufferSize());
 
   ImGui::GetIO().Fonts->Clear();
-  ImGui::GetIO().Fonts->AddFontFromFileTTF("/usr/share/fonts/truetype/hack/Hack-Regular.ttf", 22.0f);
+  ImGui::GetIO().Fonts->AddFontFromFileTTF(
+      "/usr/share/fonts/truetype/hack/Hack-Regular.ttf", 22.0f);
 
   _imgui.relayout(windowSize());
 
@@ -47,32 +79,14 @@ void Playground::initGUI() {
   GL::Renderer::setBlendEquation(GL::Renderer::BlendEquation::Add,
                                  GL::Renderer::BlendEquation::Add);
   GL::Renderer::setBlendFunction(
-    GL::Renderer::BlendFunction::SourceAlpha,
-    GL::Renderer::BlendFunction::OneMinusSourceAlpha);
+      GL::Renderer::BlendFunction::SourceAlpha,
+      GL::Renderer::BlendFunction::OneMinusSourceAlpha);
 
 #if !defined(MAGNUM_TARGET_WEBGL) && !defined(CORRADE_TARGET_ANDROID)
   /* Have some sane speed, please */
   setMinimalLoopPeriod(16);
 #endif
 }
-
-void Playground::drawEvent() {
-  startDrawing();
-  drawMesh();
-  drawGUI();
-  endDrawing();
-}
-
-void Playground::startDrawing() {
-  GL::defaultFramebuffer.clear(GL::FramebufferClear::Color);
-}
-
-void Playground::endDrawing() {
-  swapBuffers();
-  redraw();
-}
-
-void Playground::drawMesh() { _shader.draw(_mesh); }
 
 void Playground::drawGUI() {
   _imgui.newFrame();
@@ -83,10 +97,9 @@ void Playground::drawGUI() {
   else if (!ImGui::GetIO().WantTextInput && isTextInputActive())
     stopTextInput();
 
-  /* 1. Show a simple window.
-     Tip: if we don't call ImGui::Begin()/ImGui::End() the widgets appear in
-     a window called "Debug" automatically */
+  /* 1. Show a simple window. */
   {
+    ImGui::Begin("Main Window");
     ImGui::Text("Hello, world!");
     ImGui::SliderFloat("Float", &_floatValue, 0.0f, 1.0f);
     if (ImGui::ColorEdit3("Clear Color", _clearColor.data()))
@@ -98,6 +111,7 @@ void Playground::drawGUI() {
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
                 1000.0 / Double(ImGui::GetIO().Framerate),
                 Double(ImGui::GetIO().Framerate));
+    ImGui::End();
   }
 
   /* 2. Show another simple window, now using an explicit Begin/End pair */
@@ -126,15 +140,45 @@ void Playground::drawGUI() {
   GL::Renderer::disable(GL::Renderer::Feature::DepthTest);
 
   _imgui.drawFrame();
-
-  /* Reset state. Only needed if you want to draw something else with
-     different state after. */
-  // GL::Renderer::enable(GL::Renderer::Feature::DepthTest);
-  // GL::Renderer::enable(GL::Renderer::Feature::FaceCulling);
-  // GL::Renderer::disable(GL::Renderer::Feature::ScissorTest);
-  // GL::Renderer::disable(GL::Renderer::Feature::Blending);
 }
 
+// Draw Algorithm
+void Playground::resetFeatures() {
+  GL::Renderer::disable(GL::Renderer::Feature::DepthTest);
+  GL::Renderer::disable(GL::Renderer::Feature::FaceCulling);
+  GL::Renderer::disable(GL::Renderer::Feature::ScissorTest);
+  GL::Renderer::disable(GL::Renderer::Feature::Blending);
+}
+
+void Playground::startDrawing() {
+  GL::defaultFramebuffer.clear(GL::FramebufferClear::Color);
+}
+
+void Playground::drawEvent() {
+  startDrawing();
+
+  drawTriangle();
+  resetFeatures();
+
+  drawCube();
+  resetFeatures();
+
+  drawScene();
+  resetFeatures();
+
+  drawGUI();
+  resetFeatures();
+
+  endDrawing();
+
+}
+
+void Playground::endDrawing() {
+  swapBuffers();
+  redraw();
+}
+
+// Input Handling
 void Playground::viewportEvent(ViewportEvent &event) {
   GL::defaultFramebuffer.setViewport({{}, event.framebufferSize()});
 
