@@ -18,3 +18,7 @@
 	path = 3rd/SDL2
 	url = https://github.com/libsdl-org/SDL.git
 	branch = release-2.28.5
+[submodule "3rd/eigen"]
+	path = 3rd/eigen
+	url = https://gitlab.com/libeigen/eigen.git
+	branch = 3.4
