@@ -18,3 +18,7 @@
 	path = 3rd/SDL2
 	url = https://github.com/libsdl-org/SDL.git
 	branch = release-2.28.5
+[submodule "3rd/glfw"]
+	path = 3rd/glfw
+	url = https://github.com/glfw/glfw.git
+	branch = 3.3-stable

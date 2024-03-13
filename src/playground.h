@@ -5,7 +5,7 @@
 #include <Magnum/ImGuiIntegration/Context.hpp>
 #include <Magnum/ImGuiIntegration/Widgets.h>
 #include <Magnum/Math/Color.h>
-#include <Magnum/Platform/Sdl2Application.h>
+#include <Magnum/Platform/GlfwApplication.h>
 #include <Magnum/Shaders/VertexColorGL.h>
 
 using namespace Magnum;

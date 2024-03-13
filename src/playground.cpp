@@ -1,6 +1,6 @@
 #include "playground.h"
 
-using WindowFlag = Platform::Sdl2Application::Configuration::WindowFlag;
+using WindowFlag = Platform::GlfwApplication::Configuration::WindowFlag;
 
 /**
  * TODO (milestone #1):
@@ -22,7 +22,7 @@ Playground::Playground(const Arguments &arguments)
     : Platform::Application{
           arguments, Configuration{}
                          .setTitle("Playground")
-                         .addWindowFlags(WindowFlag::FullscreenDesktop)} {
+                         .addWindowFlags(WindowFlag::Fullscreen)} {
   initTriangle();
   initCube();
   initScene();
@@ -82,10 +82,10 @@ void Playground::initGUI() {
       GL::Renderer::BlendFunction::SourceAlpha,
       GL::Renderer::BlendFunction::OneMinusSourceAlpha);
 
-#if !defined(MAGNUM_TARGET_WEBGL) && !defined(CORRADE_TARGET_ANDROID)
-  /* Have some sane speed, please */
-  setMinimalLoopPeriod(16);
-#endif
+//#if !defined(MAGNUM_TARGET_WEBGL) && !defined(CORRADE_TARGET_ANDROID)
+//  /* Have some sane speed, please */
+//  setMinimalLoopPeriod(16);
+//#endif
 }
 
 void Playground::drawGUI() {
@@ -170,7 +170,6 @@ void Playground::drawEvent() {
   resetFeatures();
 
   endDrawing();
-
 }
 
 void Playground::endDrawing() {

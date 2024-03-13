@@ -1,6 +1,5 @@
-### SDL2 ###
-add_subdirectory(SDL2 EXCLUDE_FROM_ALL)
-find_package(SDL2 REQUIRED)
+### GLFW ###
+add_subdirectory(glfw EXCLUDE_FROM_ALL)
 
 ### IMGUI ###
 set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/imgui)
