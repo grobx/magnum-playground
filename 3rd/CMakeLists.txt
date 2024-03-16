@@ -16,3 +16,7 @@ add_subdirectory(magnum EXCLUDE_FROM_ALL)
 
 ### MAGNUM INTEGRATION
 add_subdirectory(magnum-integration EXCLUDE_FROM_ALL)
+
+### ImGuiFileDialog
+add_subdirectory(ImGuiFileDialog EXCLUDE_FROM_ALL)
+target_include_directories(ImGuiFileDialog PUBLIC ${IMGUI_DIR})

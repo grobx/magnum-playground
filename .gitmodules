@@ -22,3 +22,6 @@
 	path = 3rd/eigen
 	url = https://gitlab.com/libeigen/eigen.git
 	branch = 3.4
+[submodule "3rd/ImGuiFileDialog"]
+	path = 3rd/ImGuiFileDialog
+	url = https://github.com/aiekick/ImGuiFileDialog.git

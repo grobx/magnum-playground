@@ -12,6 +12,7 @@ set(MAGNUM_WITH_IMGUI ON CACHE BOOL "" FORCE)
 set(MAGNUM_WITH_TRADE ON CACHE BOOL "" FORCE)
 set(MAGNUM_WITH_OBJIMPORTER ON CACHE BOOL "" FORCE)
 set(MAGNUM_WITH_EIGEN ON CACHE BOOL "" FORCE)
+set(MAGNUM_WITH_PRIMITIVES ON CACHE BOOL "" FORCE)
 set(MAGNUM_TARGET_EGL ON CACHE BOOL "" FORCE)
 
 ### CMAKE MODULES
@@ -23,7 +24,7 @@ message(${CMAKE_MODULE_PATH})
 ### FIND DEPENDENCIES
 find_package(Eigen3 3.4 REQUIRED NO_MODULE)
 find_package(Corrade REQUIRED)
-find_package(Magnum REQUIRED GL Shaders Sdl2Application Trade ObjImporter)
+find_package(Magnum REQUIRED GL Shaders Sdl2Application Primitives Trade ObjImporter MeshTools)
 find_package(MagnumIntegration REQUIRED ImGui Eigen)
 
 ### ADD TARGET
@@ -41,4 +42,6 @@ target_link_libraries(
     Magnum::Magnum
     Magnum::Shaders
     Magnum::Trade
-    MagnumIntegration::ImGui)
+    Magnum::MeshTools
+    Magnum::Primitives
+    MagnumIntegration::ImGui ImGuiFileDialog)
