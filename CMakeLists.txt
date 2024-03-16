@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE BOOL "" FORCE)
 set(MAGNUM_WITH_SDL2APPLICATION ON CACHE BOOL "" FORCE)
 set(MAGNUM_WITH_IMGUI ON CACHE BOOL "" FORCE)
+set(MAGNUM_WITH_TRADE ON CACHE BOOL "" FORCE)
 set(MAGNUM_WITH_OBJIMPORTER ON CACHE BOOL "" FORCE)
 set(MAGNUM_WITH_EIGEN ON CACHE BOOL "" FORCE)
 set(MAGNUM_TARGET_EGL ON CACHE BOOL "" FORCE)
@@ -22,12 +23,13 @@ message(${CMAKE_MODULE_PATH})
 ### FIND DEPENDENCIES
 find_package(Eigen3 3.4 REQUIRED NO_MODULE)
 find_package(Corrade REQUIRED)
-find_package(Magnum REQUIRED GL Shaders Sdl2Application)
+find_package(Magnum REQUIRED GL Shaders Sdl2Application Trade ObjImporter)
 find_package(MagnumIntegration REQUIRED ImGui Eigen)
 
 ### ADD TARGET
 set(TARGET_NAME playground)
 add_executable(${TARGET_NAME} src/main.cpp src/playground.cpp)
+add_dependencies(${TARGET_NAME} Magnum::ObjImporter)
 target_compile_definitions(${TARGET_NAME} PRIVATE MAGNUM_IMGUIINTEGRATION_USER_CONFIG="imconfig.h")
 target_link_libraries(
     ${TARGET_NAME}
@@ -38,4 +40,5 @@ target_link_libraries(
     Magnum::GL
     Magnum::Magnum
     Magnum::Shaders
+    Magnum::Trade
     MagnumIntegration::ImGui)

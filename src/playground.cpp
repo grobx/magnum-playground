@@ -13,7 +13,7 @@ using WindowFlag = Platform::Sdl2Application::Configuration::WindowFlag;
  * - [x] add EigenIntegration
  * - [ ] create the first Scene
  * - [ ] put the table on the scene (optional)
- * - [ ] add obj importer
+ * - [-] add obj importer
  * - [ ] look for some obj file
  * - [ ] put some obj on the scene
  * - [ ] start manipulating the object using eigen
